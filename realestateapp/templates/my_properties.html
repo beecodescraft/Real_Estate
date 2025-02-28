@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %} My Property List {% endblock %}
+{% load static %}
+{% block content %} 
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-0 gx-5 align-items-end">
+            <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">Featured</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">For Sale</a>
+                    </li>
+                    <li class="nav-item me-0">
+                        <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">For Rent</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 🔹 All Property Listings -->
+<div class="container mt-5">
+    <div class="row">
+        {% for property in properties %}
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="property-item rounded overflow-hidden">
+                <div class="position-relative">
+                    <a href="{% url 'property_detail' property.id %}">
+                        <img class="img-fluid" src="{{ property.p_images.url }}" alt="{{ property.p_name }}">
+                    </a>
+                </div>
+                <div class="p-4 pb-0">
+                    <h5 class="text-primary mb-3">₹{{ property.p_price }}</h5>
+                    <a class="d-block h5 mb-2" href="{% url 'property_detail' property.id %}">
+                        {{ property.p_name }}
+                    </a>
+                    <p><i class="fa fa-map-marker-alt text-primary me-2"></i> {{ property.p_location }}</p>
+                </div>
+
+                <div class="d-flex border-top">
+                    <small class="flex-fill text-center border-end py-2">
+                        <i class="fa fa-ruler-combined text-primary me-2"></i>{{ property.p_sqrft }} Sqft
+                    </small>
+                    
+                    {% if property.p_type == "home" %}
+                        <small class="flex-fill text-center border-end py-2">
+                            <i class="fa fa-bed text-primary me-2"></i>{{ property.p_bedrooms }} Bed
+                        </small>
+                        <small class="flex-fill text-center py-2">
+                            <i class="fa fa-bath text-primary me-2"></i>{{ property.p_bathrooms }} Bath
+                        </small>
+                    {% endif %}
+                </div>
+
+                <!-- Status & Date -->
+                <div class="p-3">
+                    <p>
+                        <i class="fa fa-tag"></i> 
+                        Status: 
+                        {% if property.p_status == "sale" %}
+                            <span class="badge bg-success">For Sale</span>
+                        {% elif property.p_status == "rent" %}
+                            <span class="badge bg-warning">For Rent</span>
+                        {% elif property.p_status == "sold" %}
+                            <span class="badge bg-danger">Sold</span>
+                        {% endif %}
+                    </p>
+                    <p><i class="fa fa-calendar"></i> Listed on: {{ property.created_at|date:"M d, Y" }}</p>
+                </div>
+            </div>
+            <a href="{% url 'edit_property' property.id %}" class="btn btn-primary mt-3 w-100">Edit</a>
+            <form action="{% url 'delete_property' property.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary mt-3 w-100" onclick="return confirm('Are you sure you want to delete this property?');">
+                    Delete Property
+                </button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+           

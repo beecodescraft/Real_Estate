@@ -1,0 +1,330 @@
+{% extends 'base.html' %}
+{% block title %}
+  home 
+{% endblock %}
+{% load static %}
+{% block content %} 
+
+
+
+        <!-- Header Start -->
+        <div class="container-fluid header bg-white p-0">
+            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
+                <div class="col-md-6 p-5 mt-lg-5">
+                    <h1 class="display-5 animated fadeIn mb-4">Find A <span class="text-primary">Perfect Home</span> To Live With Your Family</h1>
+                    <p class="animated fadeIn mb-4 pb-2">
+                        Home is where love resides, memories are created, friends always belong, and laughter never ends.
+                        A perfect home is not about size or luxury, but about warmth and happiness.
+                    </p>
+                    
+                    {% if not user.is_authenticated %}
+                        <a href="/register/" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Get Started</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-6 animated fadeIn">
+                    <div class="owl-carousel header-carousel">
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src="{% static 'img/carousel-1.jpg' %}" alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src="{% static 'img/carousel-2.jpg' %}" alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src="{% static 'img/about.jpg' %}" alt="">
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <br>
+        <!-- Header End -->
+
+<!-- Search Start -->
+<div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+    <div class="container">
+        <form method="GET" action="{% url 'home' %}">
+            <div class="row g-2">
+                <div class="col-md-10">
+                    <div class="row g-2">
+                        <!-- Location Input -->
+                        <div class="col-md-4">
+                            <input type="text" name="location" class="form-control border-0 py-3" placeholder="Search Location" value="{{ request.GET.location }}">
+                        </div>
+
+                        <!-- Property Type Dropdown -->
+                        <div class="col-md-4">
+                            <select name="property_type" class="form-select border-0 py-3">
+                                <option value="">Select Property Type</option>
+                                <option value="apartment" {% if request.GET.property_type == "apartment" %}selected{% endif %}>Apartment</option>
+                                <option value="villa" {% if request.GET.property_type == "villa" %}selected{% endif %}>Villa</option>
+                                <option value="home" {% if request.GET.property_type == "home" %}selected{% endif %}>Home</option>
+                                <option value="office" {% if request.GET.property_type == "office" %}selected{% endif %}>Office</option>
+                                <option value="building" {% if request.GET.property_type == "building" %}selected{% endif %}>Building</option>
+                                <option value="townhouse" {% if request.GET.property_type == "townhouse" %}selected{% endif %}>Townhouse</option>
+                                <option value="shop" {% if request.GET.property_type == "shop" %}selected{% endif %}>Shop</option>
+                                <option value="garage" {% if request.GET.property_type == "garage" %}selected{% endif %}>Garage</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Button -->
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-dark border-0 w-100 py-3">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Search End -->
+
+        <!-- Category Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <h1 class="mb-3">Property Types</h1>
+                    <p>Explore various property categories tailored to your needs. Whether you’re looking for a modern apartment, a luxurious villa, a cozy home, or an office space, we have the perfect options for you.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'img/icon-apartment.png'%}" alt="Icon">
+                                </div>
+                                <h6>Apartment</h6>
+                                <span>123 Properties</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'img/icon-villa.png'%}" alt="Icon">
+                                </div>
+                                <h6>Villa</h6>
+                                <span>123 Properties</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'img/icon-house.png'%}" alt="Icon">
+                                </div>
+                                <h6>Home</h6>
+                                <span>123 Properties</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'img/icon-housing.png'%}" alt="Icon">
+                                </div>
+                                <h6>Office</h6>
+                                <span>123 Properties</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'img/icon-building.png'%}" alt="Icon">
+                                </div>
+                                <h6>Building</h6>
+                                <span>123 Properties</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'img/icon-neighborhood.png'%}" alt="Icon">
+                                </div>
+                                <h6>Townhouse</h6>
+                                <span>123 Properties</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'img/icon-condominium.png'%}" alt="Icon">
+                                </div>
+                                <h6>Shop</h6>
+                                <span>123 Properties</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <a class="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div class="rounded p-4">
+                                <div class="icon mb-3">
+                                    <img class="img-fluid" src="{% static 'img/icon-luxury.png'%}" alt="Icon">
+                                </div>
+                                <h6>Garage</h6>
+                                <span>123 Properties</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category End -->
+
+
+        <!-- About Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                        <div class="about-img position-relative overflow-hidden p-5 pe-0">
+                            <img class="img-fluid w-100" src="{% static 'img/about.jpg'%}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                        <h1 class="mb-4">#1 Place To Find The Perfect Property</h1>
+                        <p class="mb-4">Finding the perfect property has never been easier. Whether you're looking for a cozy home, a luxurious villa, or a commercial space, we provide the best options tailored to your needs.</p>
+                        <p><i class="fa fa-check text-primary me-3"></i> A wide range of properties in prime locations</p>
+                        <p><i class="fa fa-check text-primary me-3"></i>Affordable prices with flexible payment options</p>
+                        <p><i class="fa fa-check text-primary me-3"></i>High-quality and well-maintained properties</p>
+                        <a class="btn btn-primary py-3 px-5 mt-3" href="">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
+
+
+       <!-- Property List Start -->
+       <div class="container mt-5">
+        <div class="row">
+            {% for property in properties|slice:":6" %}
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="property-item rounded overflow-hidden">
+                    <div class="position-relative">
+                        <a href="{% url 'property_detail' property.id %}">
+                            <img class="img-fluid" src="{{ property.p_images.url }}" alt="{{ property.p_name }}">
+                        </a>
+                    </div>
+                    <div class="p-4 pb-0">
+                        <h5 class="text-primary mb-3">₹{{ property.p_price }}</h5>
+                        <a class="d-block h5 mb-2" href="{% url 'property_detail' property.id %}">
+                            {{ property.p_name }}
+                        </a>
+                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i> {{ property.p_location }}</p>
+                    </div>
+    
+                    <div class="d-flex border-top">
+                        <small class="flex-fill text-center border-end py-2">
+                            <i class="fa fa-ruler-combined text-primary me-2"></i>{{ property.p_sqrft }} Sqft
+                        </small>
+                        
+                        {% if property.p_type == "home" %}
+                            <small class="flex-fill text-center border-end py-2">
+                                <i class="fa fa-bed text-primary me-2"></i>{{ property.p_bedrooms }} Bed
+                            </small>
+                            <small class="flex-fill text-center py-2">
+                                <i class="fa fa-bath text-primary me-2"></i>{{ property.p_bathrooms }} Bath
+                            </small>
+                        {% endif %}
+                    </div>
+    
+                    <!-- Status & Date -->
+                    <div class="p-3">
+                        <p>
+                            <i class="fa fa-tag"></i> 
+                            Status: 
+                            {% if property.p_status == "sale" %}
+                                <span class="badge bg-success">For Sale</span>
+                            {% elif property.p_status == "rent" %}
+                                <span class="badge bg-warning">For Rent</span>
+                            {% elif property.p_status == "sold" %}
+                                <span class="badge bg-danger">Sold</span>
+                            {% endif %}
+                        </p>
+                        <p><i class="fa fa-calendar"></i> Listed on: {{ property.created_at|date:"M d, Y" }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Property List End -->
+
+    
+        <!-- Team End -->
+
+
+        <!-- Testimonial Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <h1 class="mb-3">Our Clients Say!</h1>
+                    <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+                </div>
+                <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="testimonial-item bg-light rounded p-3">
+                        <div class="bg-white border rounded p-4">
+                            <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
+                            <div class="d-flex align-items-center">
+                                <img class="img-fluid flex-shrink-0 rounded" src="{% static 'img/testimonial-1.jpg'%}" style="width: 45px; height: 45px;">
+                                <div class="ps-3">
+                                    <h6 class="fw-bold mb-1">Client Name</h6>
+                                    <small>Profession</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item bg-light rounded p-3">
+                        <div class="bg-white border rounded p-4">
+                            <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
+                            <div class="d-flex align-items-center">
+                                <img class="img-fluid flex-shrink-0 rounded" src="{% static 'img/testimonial-2.jpg'%}" style="width: 45px; height: 45px;">
+                                <div class="ps-3">
+                                    <h6 class="fw-bold mb-1">Client Name</h6>
+                                    <small>Profession</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item bg-light rounded p-3">
+                        <div class="bg-white border rounded p-4">
+                            <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
+                            <div class="d-flex align-items-center">
+                                <img class="img-fluid flex-shrink-0 rounded" src="{% static 'img/testimonial-3.jpg'%}" style="width: 45px; height: 45px;">
+                                <div class="ps-3">
+                                    <h6 class="fw-bold mb-1">Client Name</h6>
+                                    <small>Profession</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial End -->
+{% endblock %}
+{% block scripts %}
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+        <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+        <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    
+        <!-- Template Javascript -->
+        <script src="{% static 'js/main.js' %}"></script>
+    
+{% endblock %}

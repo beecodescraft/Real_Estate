@@ -1,0 +1,142 @@
+{% extends 'profile/base_profile' %}
+{% block content %}
+<div class="edit-property-container">
+    <div class="edit-property-box">
+        <h1>Edit Property</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_p_name">Property Name:</label>
+                {{ form.p_name }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_p_type">Property Type:</label>
+                {{ form.p_type }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_p_status">Status:</label>
+                {{ form.p_status }}
+
+            <div class="form-group">
+                <label for="id_p_location">Location:</label>
+                {{ form.p_location }}
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="id_p_price">Price:</label>
+                    {{ form.p_price }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_p_sqrft">Square Feet:</label>
+                    {{ form.p_sqrft }}
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="id_p_bedrooms">Bedrooms:</label>
+                    {{ form.p_bedrooms }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_p_bathrooms">Bathrooms:</label>
+                    {{ form.p_bathrooms }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_p_images">Property Image:</label>
+                {{ form.p_images }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_p_description">Description:</label>
+                {{ form.p_description }}
+            </div>
+
+            <button type="submit" class="btn-primary">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+<style>
+    .edit-property-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f8ff;
+    }
+
+    .edit-property-box {
+        width: 100%;
+        max-width: 700px;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-property-box h1 {
+        text-align: center;
+        color: #2563eb;
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .form-group textarea {
+        height: 100px;
+        resize: none;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #1d4ed8;
+    }
+</style>

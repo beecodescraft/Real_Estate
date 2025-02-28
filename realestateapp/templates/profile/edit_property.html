@@ -1,0 +1,168 @@
+{% extends 'profile/base_profile.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Center the form box */
+.edit-property-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f8ff; /* Light blue background */
+}
+
+/* Form container */
+.edit-property-box {
+    width: 100%;
+    max-width: 700px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form heading */
+.edit-property-box h1 {
+    text-align: center;
+    color: #2563eb; /* Blue heading */
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.edit-property-box label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Input fields */
+.edit-property-box input,
+.edit-property-box select,
+.edit-property-box textarea {
+    width: 100% !important;
+    max-width: 300px !important;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Description field (larger textarea) */
+.edit-property-box textarea {
+    height: 100px;
+    resize: none;
+}
+
+/* Grid layout for form */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Full-width row */
+.full-width {
+    grid-column: span 2;
+}
+
+/* Section Titles */
+.edit-property-box .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2563eb;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    width: 100px !important; /* Set explicit width */
+    padding: 6px 10px !important; /* Reduce padding */
+    font-size: 13px !important; /* Reduce font size */
+    background-color: #2563eb; /* Blue */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block; /* Prevent full width */
+    margin: 10px auto; /* Reduce margin */
+}
+
+/* Hover effect */
+.submit-btn:hover {
+    background-color: #1d4ed8;
+    transform: scale(1.05);
+}
+
+</style>
+
+<div class="edit-property-container">
+    <div class="edit-property-box">
+        <h1>Edit Property</h1>
+
+        <form   method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- First Section: Property Details -->
+            <div class="section-title">Property Details</div>
+            <div class="form-grid">
+                <div>
+                    <label>Property Name</label>
+                    {{ form.p_name }}
+                </div>
+                <div>
+                    <label>Property Type</label>
+                    {{ form.p_type }}
+                </div>
+                <div>
+                    <label>Status</label>
+                    {{ form.p_status }}
+                <div>
+                    <label>Location</label>
+                    {{ form.p_location }}
+                </div>
+                <div>
+                    <label>Price</label>
+                    {{ form.p_price }}
+                </div>
+
+                <div>
+                    <label>Bedrooms</label>
+                    {{ form.p_bedrooms }}
+                </div>
+                <div>
+                    <label>Bathrooms</label>
+                    {{ form.p_bathrooms }}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.p_sqrft.id_for_label }}">Square Footage</label>
+                {{ form.p_sqrft }}
+            </div>
+
+            <!-- Second Section: Images & Description -->
+            <div class="section-title">Additional Information</div>
+            <div class="form-grid">
+                <div class="full-width">
+                    <label>Property Images</label>
+                    {{ form.p_images }}
+                </div>
+
+                <div class="full-width">
+                    <label>Description</label>
+                    {{ form.p_description }}
+                </div>
+            </div>
+             
+                <button type="submit" class="submit-btn">Save Changes</button>
+                     
+        </form>
+    </div>
+</div>
+{% endblock %}

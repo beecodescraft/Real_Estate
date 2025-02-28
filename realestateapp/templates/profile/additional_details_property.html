@@ -1,0 +1,145 @@
+{% extends 'profile/base_profile.html' %}
+{% load static %}
+{% block content %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="edit-property-container">
+            <div class="edit-property-box">
+                <h1>Add Property Attachment</h1>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="{{ form.ownership.id_for_label }}">Ownership</label>
+                        {{ form.ownership }}
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="{{ form.state.id_for_label }}">State</label>
+                        {{ form.state }}
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="{{ form.town.id_for_label }}">Town</label>
+                        {{ form.town }}
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="{{ form.street.id_for_label }}">Street</label>
+                        {{ form.street }}
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="{{ form.contact_name.id_for_label }}">Contact Name</label>
+                        {{ form.contact_name }}
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="{{ form.contact_email.id_for_label }}">Contact Email</label>
+                        {{ form.contact_email }}
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="{{ form.contact_phone.id_for_label }}">Contact Phone</label>
+                        {{ form.contact_phone }}
+                    </div>
+            
+                    <button type="submit" class="submit-btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+<style>
+    /* Center the form box */
+    .edit-property-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f8ff;
+    }
+
+    /* Form container */
+    .edit-property-box {
+        width: 100%;
+        max-width: 700px;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-property-box h1 {
+        text-align: center;
+        color: #2563eb;
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Labels */
+    .edit-property-box label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    /* Input fields */
+    .edit-property-box input,
+    .edit-property-box select,
+    .edit-property-box textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-bottom: 15px;
+        background-color: #f9f9f9;  /* Light background for better visibility */
+    }
+
+    /* Description field (larger textarea) */
+    .edit-property-box textarea {
+        height: 100px;
+        width: 100%;
+        resize: none;
+    }
+
+    /* Grid layout for form */
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    /* Full-width row */
+    .full-width {
+        grid-column: span 2;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+        width: 100px !important;
+        padding: 6px 10px !important;
+        font-size: 13px !important;
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        height: 40px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+        display: inline-block;
+        margin: 10px auto;
+    }
+
+    /* Hover effect */
+    .submit-btn:hover {
+        background-color: #1d4ed8;
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

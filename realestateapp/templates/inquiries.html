@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .inquiry-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .inquiry-item {
+        border-bottom: 1px solid #ddd;
+        padding: 15px 0;
+    }
+
+    .inquiry-item:last-child {
+        border-bottom: none;
+    }
+
+    .inquiry-header {
+        font-size: 18px;
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    .inquiry-text {
+        font-size: 15px;
+        color: #555;
+    }
+
+    .reply-btn {
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        padding: 6px 12px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .reply-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="inquiry-container">
+    <h2 class="text-center">Your Property Inquiries</h2>
+    {% if inquiries %}
+        {% for inquiry in inquiries %}
+            <div class="inquiry-item">
+                <p class="inquiry-header">{{ inquiry.property.p_name }}</p>
+                <p class="inquiry-text"><strong>From:</strong> {{ inquiry.sender.username }}</p>
+                <p class="inquiry-text"><strong>Message:</strong> {{ inquiry.message }}</p>
+                <a href="mailto:{{ inquiry.sender.email }}" class="reply-btn">Reply</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No inquiries found.</p>
+    {% endif %}
+</div>
+{% endblock %}
