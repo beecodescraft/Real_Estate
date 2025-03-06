@@ -1,0 +1,25 @@
+{% extends 'profile/base_profile.html' %}
+
+{% block content %}
+  <div class="inquiry-container">
+    <h2>Inquiry for {{ property.p_name }}</h2>
+    <p>Fill out the form below to inquire about this property.</p>
+    
+    <form method="POST" class="inquiry-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Send Inquiry</button>
+      </div>
+    </form>
+
+    {% if form.errors %}
+      <div class="error-messages">
+        <p>Please fix the errors in the form.</p>
+      </div>
+    {% endif %}
+
+  </div>
+
+{% endblock %}

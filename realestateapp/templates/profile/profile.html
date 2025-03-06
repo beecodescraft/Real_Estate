@@ -1,0 +1,194 @@
+{% extends 'profile/base_profile.html' %}
+{% load static %}
+
+{% block title %}
+  Profile - {{ user.username }}
+{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <!-- Sidebar Section -->
+    <div class="sidebar">
+        <div class="profile-info">
+            <h2>{{ user.first_name }} 👋</h2>
+            <p class="email">{{ user.email }}</p>
+            <a href="{% url 'edit_profile' %}" class="btn">Edit Profile</a>
+        </div>
+
+        <nav class="menu">
+            <a href="/my_properties/" class="menu-item">View My Properties</a>
+            <a href="/home/" class="menu-item primary">Start New Search</a>
+            <a href="{% url 'saved_properties' %}" class="menu-item">Saved Properties</a>
+        </nav>
+
+        <div class="info-box">
+            <strong>Looking to sell/rent your property?</strong>
+            <a href="/add_property/" class="btn">Post Property for FREE</a>
+        </div>
+
+        <div class="info-box">
+            <strong>Looking to buy a property?</strong>
+            <a href="/list_property/" class="btn">Buy a Property</a>
+        </div>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="menu-item logout">Logout</a>
+        {% endif %}
+        <a href='/delete/' class="menu-item danger">Delete Account</a>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <h1>Welcome, {{ user.first_name }}!</h1>
+        <p>This is your profile dashboard where you can manage your properties, saved listings, and account settings.</p>
+
+        <div class="content-box">
+            <h3>My Recent Activities</h3>
+            <p>No recent activities yet.</p>
+        </div>
+
+    </div>
+</div>
+
+<style>
+/* General Page Styling */
+body {
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Profile Page Layout */
+.profile-page {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 280px;
+    background: #1e293b;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-info h2 {
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.profile-info .email {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.menu {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.menu-item {
+    display: block;
+    padding: 12px;
+    margin: 6px 0;
+    text-decoration: none;
+    color: white;
+    background: #334155;
+    text-align: center;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.menu-item:hover {
+    background: #475569;
+}
+
+.primary {
+    background: #2563eb;
+}
+
+.primary:hover {
+    background: #1d4ed8;
+}
+
+.logout {
+    background: #555;
+}
+
+.danger {
+    background: #dc2626;
+}
+
+.danger:hover {
+    background: #b91c1c;
+}
+
+/* Info Boxes */
+.info-box {
+    background: #fcd34d;
+    color: #333;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #1e293b;
+}
+
+p {
+    color: #666;
+}
+
+/* Content Box Styling */
+.content-box {
+    background: #f3f4f6;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+.content-box h3 {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-page {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .main-content {
+        margin: 15px;
+        padding: 20px;
+    }
+}
+</style>
+{% endblock %}

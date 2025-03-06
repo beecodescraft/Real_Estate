@@ -1,0 +1,19 @@
+✉ New Property Inquiry
+
+Hello {{ receiver_name }}, 
+
+You have received a new inquiry for your property: {{ property.p_name }}.
+
+🏡 Property Details:
+Property Name: {{ property.p_name }}
+Owner: {{ receiver_name }}  
+📩 Inquiry Details:
+📧 Email: {{ sender_email }}
+📞 Phone: {{ sender_phone }}
+📝 Message:
+"{{ message }}"
+
+Please respond to this inquiry as soon as possible.
+
+Best regards,  
+🏠 EstateEase Team

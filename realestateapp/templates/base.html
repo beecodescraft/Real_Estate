@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>EstateEase</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+   
+</head>
+<style>
+    /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Navbar Styling */
+.navbar-container {
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+}
+
+.navbar-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.navbar-logo img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+}
+
+.navbar-menu a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    transition: color 0.3s;
+}
+
+.navbar-menu a:hover {
+    color: #007bff;
+}
+
+.btn-custom {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-custom:active {
+    background-color: #004494;
+    transform: scale(1);
+}
+
+.footer {
+    background-color: #232F3E;
+    color: white;
+    padding: 40px 0;
+    font-family: Arial, sans-serif;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.footer-section {
+    width: 23%;
+}
+
+.footer-section h5 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.footer-links a {
+    display: block;
+    color: #ddd;
+    text-decoration: none;
+    margin: 5px 0;
+}
+
+.footer-links a:hover {
+    color: #ff9900;
+}
+
+.footer-gallery {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-img img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.footer-input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    font-size: 14px;
+}
+
+
+
+</style>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar-container">
+        <nav class="navbar-custom">
+            <a href="/home/" class="navbar-logo">
+                <img src="{% static 'img/icon-deal.png' %}" alt="Icon">
+                <h1>EstateEase</h1>
+            </a>
+          
+            <ul class="navbar-menu">
+                <li><a href="/home/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/list_property/">Property List</a></li>
+                <li><a href="/help/">Help</a></li>
+                <a href="/profile/"><button class="btn-custom">Hey, {{ user.first_name }} 👋</button></a>
+            </ul>
+        </nav>
+    </div>
+
+  
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        {% block content %}{% endblock %}
+    </div>
+
+    {% block scripts %}{% endblock scripts %}
+
+    <!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h5>Get In Touch</h5>
+            <p><i class="fas fa-map-marker-alt"></i> Palakkad, Kerala, India</p>
+            <p><i class="fas fa-phone"></i> +012 345 67890</p>
+            <p><i class="fas fa-envelope"></i> info@example.com</p>
+        </div>
+        
+        <div class="footer-section footer-links">
+            <h5>Quick Links</h5>
+            <a href="/about/">About Us</a>
+            <a href="">Contact Us</a>
+        </div>
+        
+        <div class="footer-section">
+            <h5>Photo Gallery</h5>
+            <div class="footer-gallery">
+                <div class="footer-img">
+                    <img src="{% static 'img/property-1.jpg' %}" alt="">
+                </div>
+                <div class="footer-img">
+                    <img src="{% static 'img/property-2.jpg' %}" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h5>Newsletter</h5>
+            <input class="footer-input" type="text" placeholder="Your email">
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 EstateEase | All Rights Reserved</p>
+    </div>
+</footer>
+
+
+    <!-- JavaScript -->
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>

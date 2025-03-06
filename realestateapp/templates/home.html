@@ -1,0 +1,558 @@
+
+{% extends 'base.html' %}
+{% block title %}
+  home 
+{% endblock %}
+{% load static %}
+{% block content %} 
+
+
+
+        <!-- Header Start -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Find A <span class="highlight">Perfect Home</span> To Live With Your Family</h1>
+                        <p>
+                            Home is where love resides, memories are created, friends always belong, and laughter never ends.
+                            A perfect home is not about size or luxury, but about warmth and happiness.
+                        </p>
+                        {% if not user.is_authenticated %}
+                         <a href="/register/" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Get Started</a>
+                        {% endif %}
+                    </div>
+                    <div class="hero-image">
+                        <img src="{% static 'img/carousel-1.jpg' %}" alt="Beautiful Home">
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Header End -->
+    
+<!-- Search Section -->
+<div class="search-section wow fadeIn" data-wow-delay="0.1s">
+    <div class="search-container">
+        <form method="GET" action="{% url 'property_search' %}" class="search-form">
+            <div class="row">
+                <!-- Property Name Input -->
+                <div class="col">
+                    <input type="text" name="keyword" placeholder="Search Property Name" value="{{ request.GET.keyword }}">
+                </div>
+
+                <!-- Location Input -->
+                <div class="col">
+                    <input type="text" name="p_location" placeholder="Search Location" value="{{ request.GET.p_location }}">
+                </div>
+
+                <!-- Property Type Dropdown -->
+                <div class="col">
+                    <select name="p_type">
+                        <option value="">Select Property Type</option>
+                        <option value="apartment" {% if request.GET.p_type == "apartment" %}selected{% endif %}>Apartment</option>
+                        <option value="villa" {% if request.GET.p_type == "villa" %}selected{% endif %}>Villa</option>
+                        <option value="home" {% if request.GET.p_type == "home" %}selected{% endif %}>Home</option>
+                        <option value="office" {% if request.GET.p_type == "office" %}selected{% endif %}>Office</option>
+                        <option value="building" {% if request.GET.p_type == "building" %}selected{% endif %}>Building</option>
+                        <option value="townhouse" {% if request.GET.p_type == "townhouse" %}selected{% endif %}>Townhouse</option>
+                        <option value="shop" {% if request.GET.p_type == "shop" %}selected{% endif %}>Shop</option>
+                        <option value="garage" {% if request.GET.p_type == "garage" %}selected{% endif %}>Garage</option>
+                    </select>
+                </div>
+
+                <!-- Search Button -->
+                <div class="col">
+                    <button type="submit" class="search-btn">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% if request.GET.p_name or request.GET.p_type or request.GET.p_location or request.GET.p_price %}
+    <div class="property-list">
+        {% for property in properties %}
+            <div class="property-card">
+                <img class="property-image" src="{{ property.p_images.url }}" alt="{{ property.p_name }}">
+                <div class="property-info">
+                    <h4>{{ property.p_name }}</h4>
+                    <p>Type: {{ property.p_type }}</p>
+                    <p>Location: {{ property.p_location }}</p>
+                    <p>Price: ${{ property.p_price }}</p>
+                    <a href="{% url 'property_detail' property.id %}">View Details</a>
+                </div>
+            </div>
+        {% empty %}
+            <p>No properties found matching your search.</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+<!-- Search End -->
+<!-- About Section Start -->
+<div class="container-fluid about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Left Side: Image -->
+            <div class="col-lg-6">
+                <div class="about-image">
+                    <div class="image-frame">
+                        <img class="img-fluid" src="{% static 'img/about.jpg' %}" alt="Property Image">
+                    </div>
+                </div>
+            </div>
+            <!-- Right Side: Text Content -->
+            <div class="col-lg-6">
+                <h1 class="section-title">Find Your Dream Property with Ease</h1>
+                <p class="section-description">
+                    Discover a wide range of properties tailored to your needs. Whether you're looking for a cozy home, 
+                    a luxurious apartment, or an investment opportunity, we have the perfect options for you.
+                </p>
+                <ul class="about-list">
+                    <li><i class="fa fa-check-circle text-primary"></i> Handpicked properties in prime locations</li>
+                    <li><i class="fa fa-check-circle text-primary"></i> Affordable pricing with flexible payment options</li>
+                    <li><i class="fa fa-check-circle text-primary"></i> Transparent and hassle-free buying process</li>
+                </ul>
+                <a class="btn btn-primary btn-custom" href="#">Learn More</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About Section End -->
+
+
+
+
+<div class="container">
+    <div class="property-container">
+        {% for property in properties %}
+        <div class="property-card">
+            <a href="{% url 'property_detail' property.id %}">
+                <img class="property-image" src="{{ property.p_images.url }}" alt="{{ property.p_name }}">
+            </a>
+            <div class="property-info">
+                <h4 class="property-price">₹{{ property.p_price }}</h4>
+                <a href="{% url 'property_detail' property.id %}"
+                    class="property-name">{{ property.p_name }}</a>
+                <p class="property-location">📍 {{ property.p_location }}</p>
+                <div class="property-details">
+                    <span>📏 {{ property.p_sqrft }} Sqft</span>
+                    {% if property.p_type == "home" %}
+                    <span>  🛏 {{ property.p_bedrooms }} Beds</span>
+                    <span> 🛁 {{ property.p_bathrooms }} Baths</span>
+                    {% endif %}
+                </div>
+                <div class="property-status">
+                    <strong>Status: </strong>
+                    {% if property.p_status == "sale" %}
+                        <span class="status-badge sale">For Sale</span>
+                    {% elif property.p_status == "rent" %}
+                        <span class="status-badge rent">For Rent</span>
+                    {% elif property.p_status == "sold" %}
+                        <span class="status-badge sold">Sold</span>
+                    {% endif %}
+                </div>
+                <p class="property-date">📅 Listed on: {{ property.posted_on|date:"M d, Y" }}</p>
+                <div class="property-actions">
+                    <form action="{% url 'save_property' property.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="save-button">❤️ Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+    <!-- Property List End -->
+
+    <!-- Testimonials Section Start -->
+<div class="container testimonials">
+    <h2 class="section-title text-center">What Our Clients Say</h2>
+    <div class="testimonial-slider">
+        <div class="testimonial-item">
+            <p>"The best property site! Helped me find my dream home easily."</p>
+            <h5>- John Doe</h5>
+        </div>
+        <div class="testimonial-item">
+            <p>"Smooth process and professional service. Highly recommended!"</p>
+            <h5>- Sarah Williams</h5>
+        </div>
+        <div class="testimonial-item">
+            <p>"A great selection of properties and helpful agents. 5 stars!"</p>
+            <h5>- Michael Brown</h5>
+        </div>
+    </div>
+</div>
+<!-- Testimonials Section End -->
+
+
+<!-- Why Choose Us Section Start -->
+<div class="container why-choose-us">
+    <h2 class="section-title text-center">Why Choose Us?</h2>
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <i class="fa fa-home fa-3x text-primary"></i>
+            <h4>Wide Property Options</h4>
+            <p>Explore a variety of properties that match your needs and budget.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fa fa-dollar-sign fa-3x text-primary"></i>
+            <h4>Best Price Guarantee</h4>
+            <p>Get the best market prices with no hidden charges.</p>
+        </div>
+        
+    </div>
+</div>
+<!-- Why Choose Us Section End -->
+
+    
+<style>
+
+      
+        /* Hero Section - Defines the layout and appearance of the hero section */
+        .hero-section {
+            width: 100%;
+            background: white;
+            padding: 50px 20px;
+        }
+        
+        /* Hero Content - Arranges text and image side by side */
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            margin: auto;
+            flex-wrap: wrap;
+        }
+        
+        /* Container - General container for content alignment */
+        .container {
+            max-width: auto;
+            margin: auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Text - Styles the text portion of the hero section */
+        .hero-text {
+            width: 50%;
+        }
+        
+        .hero-text h1 {
+            font-size: 42px;
+            font-weight: bold;
+            color: #222;
+            line-height: 1.3;
+        }
+        
+        /* Highlight - Styles emphasized text */
+        .highlight {
+            color: #007bff;
+        }
+        
+        .hero-text p {
+            font-size: 18px;
+            color: #555;
+            margin-top: 15px;
+        }
+        
+        /* Hero Image - Styles the image portion of the hero section */
+        .hero-image {
+            width: 50%;
+            position: relative;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Responsive Hero Section - Adjusts layout for smaller screens */
+        @media (max-width: 1024px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        /* Search Section - Styles the property search area */
+        .search-section {
+            width: 100%;
+            background: #007bff;
+            padding: 35px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        /* Search Container - Restricts width and centers the form */
+        .search-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        
+        /* Search Form - Aligns input fields and button */
+        .search-form .row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Input Fields - Styles for search fields */
+        .search-form input,
+        .search-form select {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Search Button - Styles for search submission */
+        .search-form button {
+            width: 100%;
+            padding: 14px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+        
+        .search-form button:hover {
+            background: #444;
+        }
+        
+        /* Responsive Search Form - Adjusts layout for smaller screens */
+        @media (max-width: 768px) {
+            .search-form .row {
+                flex-direction: column;
+                gap: 15px;
+            }
+        
+            .search-form input,
+            .search-form select,
+            .search-form button {
+                font-size: 14px;
+            }
+        }
+        .about-section {
+    padding: 80px 0;
+    background: #f8f9fa;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.about-list {
+    list-style: none;
+    padding: 0;
+}
+
+.about-list li {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.about-list i {
+    font-size: 1.2rem;
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.btn-custom {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-custom:hover {
+    background: #0056b3;
+    color: #fff;
+}
+
+.about-image {
+    position: relative;
+    text-align: center;
+}
+
+.image-frame {
+    display: inline-block;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: perspective(1000px) rotateY(-5deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-frame:hover {
+    transform: perspective(1000px) rotateY(0deg);
+}
+
+.about-image img {
+    width: 800px;
+    height: 400px;
+    object-fit: cover;
+}
+
+        
+        /* Property Listing Section - Styles property grid layout */
+        .property-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+         /* Property Listing Section */
+.property-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Ensures max 3 columns */
+    gap: 5px; /* Reduce this value */
+    justify-content: center;
+    padding: 20px; /* Remove unnecessary padding */
+}
+
+
+/* Property Card */
+.property-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+    width: 100%;
+    max-width: 350px;  /* Reduced size */
+    height: 500px;     /* Adjusted height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Property Image */
+.property-image {
+    width: 100%;
+    height: 220px; /* Adjusted for uniformity */
+    object-fit: cover; /* Ensures full coverage */
+}
+
+/* Property Info */
+.property-info {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+/* Property Name */
+.property-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.property-name:hover {
+    color: #007bff;
+}
+
+/* Property Price */
+.property-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: white;
+    display: inline-block;
+}
+
+.sale { background-color: green; }
+.rent { background-color: orange; }
+.sold { background-color: red; }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .property-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .property-list {
+        grid-template-columns: 1fr;
+    }
+}
+.testimonials {
+    padding: 80px 0;
+    background: #fff;
+    text-align: center;
+}
+
+.testimonial-slider {
+    display: flex;
+    overflow: hidden;
+    scroll-snap-type: x mandatory;
+}
+
+.testimonial-item {
+    min-width: 100%;
+    scroll-snap-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-item p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.testimonial-item h5 {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.why-choose-us {
+    padding: 80px 0;
+    background: #f8f9fa;
+    text-align: center;
+}
+
+.why-choose-us i {
+    margin-bottom: 15px;
+}
+
+</style>
+{% endblock %}

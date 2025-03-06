@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="edit-property-container">
+        <div class="edit-property-box">
+            <h1>Add Property</h1>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.p_name.id_for_label }}">Property Name</label>
+                    {{ form.p_name }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.p_type.id_for_label }}">Property Type</label>
+                    {{ form.p_type }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.p_status.id_for_label }}">Property Status</label>
+                    {{ form.p_status }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.p_location.id_for_label }}">Location</label>
+                    {{ form.p_location }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.p_price.id_for_label }}">Price</label>
+                    {{ form.p_price }}
+                </div>
+
+                <!-- Conditionally render bedrooms and bathrooms fields -->
+                <div class="form-group" id="bedrooms-group">
+                    <label for="{{ form.p_bedrooms.id_for_label }}">Bedrooms</label>
+                    {{ form.p_bedrooms }}
+                </div>
+
+                <div class="form-group" id="bathrooms-group">
+                    <label for="{{ form.p_bathrooms.id_for_label }}">Bathrooms</label>
+                    {{ form.p_bathrooms }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.p_sqrft.id_for_label }}">Square Footage</label>
+                    {{ form.p_sqrft }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.p_images.id_for_label }}">Property Images</label>
+                    {{ form.p_images }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.p_description.id_for_label }}">Description</label>
+                    {{ form.p_description }}
+                </div>
+                {% for property in properties %}
+                   
+                    {% endfor %}
+                   <button   type="submit" class="submit-btn">Next</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    // Script to dynamically hide or show the 'bedrooms' and 'bathrooms' fields based on property type
+    document.addEventListener("DOMContentLoaded", function() {
+        const propertyTypeField = document.querySelector('select[name="p_type"]');
+        const bedroomsGroup = document.getElementById('bedrooms-group');
+        const bathroomsGroup = document.getElementById('bathrooms-group');
+
+        propertyTypeField.addEventListener('change', function() {
+            const selectedType = propertyTypeField.value;
+            if (selectedType === 'home' || selectedType === 'townhouse') {
+                bedroomsGroup.style.display = 'block';
+                bathroomsGroup.style.display = 'block';
+            } else {
+                bedroomsGroup.style.display = 'none';
+                bathroomsGroup.style.display = 'none';
+            }
+        });
+
+        // Trigger the change event to apply initial form state
+        propertyTypeField.dispatchEvent(new Event('change'));
+    });
+</script>
+
+<style>
+    /* Center the form box */
+    .edit-property-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f8ff;
+    }
+
+    /* Form container */
+    .edit-property-box {
+        width: 100%;
+        max-width: 700px;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-property-box h1 {
+        text-align: center;
+        color: #2563eb;
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Labels */
+    .edit-property-box label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    /* Input fields */
+    .edit-property-box input,
+    .edit-property-box select,
+    .edit-property-box textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    /* Description field (larger textarea) */
+    .edit-property-box textarea {
+        height: 100px;
+        width: 100%;
+        resize: none;
+    }
+
+    /* Grid layout for form */
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    /* Full-width row */
+    .full-width {
+        grid-column: span 2;
+    }
+
+    
+
+    
+.submit-btn {
+    width: 100px !important; /* Set explicit width */
+    padding: 6px 10px !important; /* Reduce padding */
+    font-size: 13px !important; /* Reduce font size */
+    background-color: #2563eb; /* Blue */
+    color: white;
+    border: none;
+    height: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block; /* Prevent full width */
+    margin: 10px auto; /* Reduce margin */
+}
+
+/* Hover effect */
+.submit-btn:hover {
+    background-color: #1d4ed8;
+    transform: scale(1.05);
+}
+</style>
+
+{% endblock %}
